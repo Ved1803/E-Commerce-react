@@ -1,36 +1,64 @@
-import React, { createContext, useState } from "react";
-import all_product from "../Components/Assets/all_product";
+import React, { createContext, useState, useEffect } from "react";
+import Image from "../Components/Assets/product_13.png";
+import { getAllCollections } from "../api/apiFunctions";
+
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-  let cart = {};
-  for (let index = 0; index < all_product.length + 1; index++) {
-    cart[index] = 0;
-  }
-  return cart;
-};
-
 const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart);
+  const [allProduct, setAllProduct] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+
+  // Fetch collections when the component mounts
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const response = await getAllCollections();
+        setAllProduct(
+          response.data
+        );
+      } catch (err) {
+        console.error("Error fetching collections:", err);
+      }
+    };
+    fetchCollections();
+  }, []);
+
+  // Initialize default cart based on allProduct data
+  useEffect(() => {
+    const initializeCart = () => {
+      let cart = {};
+      for (let index = 0; index < allProduct.length; index++) {
+        cart[allProduct[index].id] = 0;
+      }
+      setCartItems(cart);
+    };
+    initializeCart();
+  }, [allProduct]);
 
   const addToCart = (itemId) => {
+    console.log(itemId, "pehla pehla pyar hai 76545678765676666657765756576")
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    console.log(cartItems);
+    console.log(cartItems, "dusra pyar hai");
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: Math.max(prev[itemId] - 1, 0),
+    }));
   };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = all_product.find(
+        let itemInfo = allProduct.find(
           (product) => product.id === Number(item)
         );
-        totalAmount += itemInfo.new_price * cartItems[item];
+        if (itemInfo) {
+          totalAmount += itemInfo.new_price * cartItems[item];
+        }
       }
     }
     return totalAmount;
@@ -44,10 +72,10 @@ const ShopContextProvider = (props) => {
       }
     }
     return totalItem;
-  }
+  };
 
   const contextValue = {
-    all_product,
+    allProduct,
     cartItems,
     addToCart,
     removeFromCart,

@@ -1,24 +1,21 @@
-// Components/CollectionsManager.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CollectionForm from "./CollectionForm";
+import { useNavigate } from "react-router-dom";
+import { getAllCollections, deleteCollection } from "../api/apiFunctions";
+// import { deleteCollection, getAllCollections } from "./Assets/api/apiFunctions";
+
 
 const CollectionsManager = () => {
-  const [formV, setFormV] = useState(false);
-  const [formDataManage, setFormDataManage] = useState(false)
   const [collections, setCollections] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    newCollection: false,
-  });
-  const [selectedCollection, setSelectedCollection] = useState(null);
+  const navigate = useNavigate(); // Use the navigate hook for redirection
 
   // Fetch collections from API
   useEffect(() => {
     const fetchCollections = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/collections");
+        const response = await getAllCollections();
         setCollections(response.data);
+        console.log(collections);
       } catch (err) {
         console.error("Error fetching collections:", err);
       }
@@ -27,108 +24,64 @@ const CollectionsManager = () => {
     fetchCollections();
   }, []);
 
-  // Handle adding a new collection
-  const handleAddCollection = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/collections",
-        formData
-      );
-      setCollections([...collections, response.data]);
-      console.log(response.data);
-      setFormData({
-        name: "",
-        newCollection: false,
-      }); // Reset form
-    } catch (error) {
-      console.error("Error creating collection:", error);
-    }
+  // Redirect to the details page when clicking a collection name
+  const handleNameClick = (id) => {
+    navigate(`/collections/${id}`);
   };
 
-  // Handle input change for form
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    const newValue =
-      type === "number" ? Number(value) : type === "checkbox" ? checked : value;
-
-    setFormData({
-      ...formData,
-      [name]: newValue,
-    });
-  };
-
-  // Handle clicking a collection to fetch details
-  const handleCollectionClick = async (id) => {
+  const handleDelete = async (id) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/collections/${id}`
-      );
-      setSelectedCollection(response.data);
+      await deleteCollection(id); // Call the delete API
+      setCollections(collections.filter((collection) => collection.id !== id)); // Update the state
+      alert("Collection deleted successfully");
     } catch (error) {
-      console.error("Error fetching collection details:", error);
+      console.error("Error deleting collection:", error);
+      alert("Failed to delete the collection");
     }
   };
 
   return (
     <div>
-      <h1>Collections</h1>
-      <button
-        onClick={() => {
-          setFormV(!formV);
-        }}
-      >
-        {formV ? "Close Form" : "Add New Collection"}
-      </button>
-
-      {formV && (
-        <CollectionForm
-          formData={formData}
-          handleInputChange={handleInputChange}
-          handleAddCollection={handleAddCollection}
-        />
-      )}
-      <button onClick={()=> {
-        setFormDataManage(!formDataManage)
-      }}>All Collections</button>
-
-      {
-        formDataManage ? (<>
-         <h2>All Collections</h2>
-      <ul>
-        {collections.map((collection) => (
-          <li
-            key={collection.id}
-            onClick={() => handleCollectionClick(collection.id)}
-          >
-            <h3>Name: {collection.name}</h3>
-            <p>New Price: ${collection.new_price}</p>
-            <p>Old Price: ${collection.old_price}</p>
-            <p>
-              {collection.new_collection
-                ? "New Collection!"
-                : "Regular Collection"}
-            </p>
-          </li>
-        ))}
-      </ul>
-
-      {selectedCollection && (
-        <div>
-          <h2>Collection Details</h2>
-          <p>Name: {selectedCollection.name}</p>
-          <p>New Price: ${selectedCollection.new_price}</p>
-          <p>Old Price: ${selectedCollection.old_price}</p>
-          <p>
-            {selectedCollection.new_collection
-              ? "New Collection!"
-              : "Regular Collection"}
-          </p>
-        </div>
-      )}
-        </>) : ("")
-      }
-
+      <h2>All Collections</h2>
+      <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>New Price</th>
+            <th>Old Price</th>
+            <th>Category</th>
+            <th>New Collection</th>
+            <th>Manage</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {collections.map((collection) => (
+            <tr key={collection.id}>
+              <td
+                style={{
+                  cursor: "pointer",
+                  color: "black",
+                  textDecoration: "underline",
+                }}
+                onClick={() => handleNameClick(collection.id)}
+              >
+                {collection.name}
+              </td>
+              <td>${collection.new_price}</td>
+              <td>${collection.old_price}</td>
+              <td>{collection.category}</td>
+              <td>{collection.new_collection ? "Yes" : "No"}</td>
+              <td>
+                <button onClick={() => handleDelete(collection.id)}>
+                  Delete
+                </button>
+              </td>
+              <td>{collection.image_url}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

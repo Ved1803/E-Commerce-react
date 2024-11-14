@@ -1,6 +1,6 @@
 .item {
     width: 350px;
-
+    height: 510px;
 }
 
 .item p {
@@ -28,4 +28,10 @@
 .item :hover{
     transform: scale(1.05);
     transition: 0.6s;
+}
+
+.cover-img {
+    height: 350px;
+    width: 450px;
+    object-fit: cover;
 }
