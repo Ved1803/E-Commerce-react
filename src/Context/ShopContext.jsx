@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import Image from "../Components/Assets/product_13.png";
-import { getAllCollections } from "../api/apiFunctions";
+import { getAllCollections, getCart } from "../api/apiFunctions";
 
 
 export const ShopContext = createContext(null);
@@ -35,6 +35,8 @@ const ShopContextProvider = (props) => {
     };
     initializeCart();
   }, [allProduct]);
+
+
 
   const addToCart = (itemId) => {
     console.log(itemId, "pehla pehla pyar hai 76545678765676666657765756576")

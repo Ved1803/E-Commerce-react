@@ -14,9 +14,14 @@ import React, { useState, useEffect } from "react";
 import CollectionsManager from "./Components/CollectionsManager";
 import FormShow from "./Components/FormShow";
 import Collection from "./Components/Collection";
-
+// import { handleLogout } from "./Components/Navbar/Navbar";
 
 const App = () => {
+
+  console.log("mainn render");
+  useEffect(() => {
+    console.log("mainn render");
+  })
   return (
     <div>
       <BrowserRouter>
@@ -41,12 +46,14 @@ const App = () => {
           </Route>
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginSignup />} />
+          <Route path="/logout" element={<handleLogout />} />
           <Route path="/collections" element={<CollectionsManager />} />
           <Route path="/collections/:id" element={<Collection />} />
           <Route path="/collections/:id" element={<CollectionsManager />} />
         </Routes>
         <Footer />
       </BrowserRouter>
+
       {/* <CollectionsManager /> */}
     </div>
   );

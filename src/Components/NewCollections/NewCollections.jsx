@@ -27,8 +27,8 @@ const NewCollections = () => {
       <h1>NEW COLLECTIONS</h1>
       <hr />
       <div className="collections">
-        {collections.map((item, i) => {
-          console.log(item)
+        {collections?.map((item, i) => {
+          {/* console.log(item) */}
           return (
             <Item
               key={i}

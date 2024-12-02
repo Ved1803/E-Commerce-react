@@ -3,13 +3,29 @@ import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
+import { createCartItems } from "../../api/apiFunctions";
 
 const ProductDisplay = (props) => {
   const { product } = props;
   const {addToCart} = useContext(ShopContext)
+  
+  const addToCardData = async (id, total) => {
+    console.log(id,'dsfadsfafadsf');
+    const updatedData = {
+      collection_id: id,
+      quantity: 1,
+      total: total,
+    };
+    try {
+      const response = await createCartItems(updatedData);
+      console.log(response,'created cart');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="productDisplay">
-      {console.log(props.product)}
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
           <img src={product.image_url} alt="" />
@@ -55,7 +71,10 @@ const ProductDisplay = (props) => {
             <div>XXL</div>
           </div>
         </div>
-        <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
+        <button onClick={()=>{
+          addToCart(product.id)
+          addToCardData(product.id, product.new_price);
+        }}>ADD TO CART</button>
         <p className="productdisplay-right-category"><span>Category : </span>Woman, T-Shirt, Crop Top</p>
         <p className="productdisplay-right-category"><span>Tags : </span>Modern, latest</p>
       </div>
