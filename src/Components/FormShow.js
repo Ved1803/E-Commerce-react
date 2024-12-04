@@ -30,7 +30,7 @@ const FormShow = () => {
           category: "",
           new_price: "",
           old_price: "",
-          newCollection: false,
+          new_collection: false,
           image: null,
         }); // Reset formjm
       } catch (error) {
@@ -48,7 +48,6 @@ const FormShow = () => {
           : type === "checkbox"
           ? checked
           : value;
-
       setFormData({
         ...formData,
         [name]: newValue,

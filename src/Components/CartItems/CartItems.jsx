@@ -2,71 +2,21 @@ import React, { useContext, useEffect } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
-import { getCart, removeCartItem, updateCartItemQuantity } from "../../api/apiFunctions";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const CartItems = () => {
-  const [items, setitems] = useState([]);
-  const [cart, setCart]= useState({})
   const {
-    allProduct,
     cartItems,
-    removeFromCart,
-    getTotalCartAmount,
+    cart,
+    removeFromCartItem,
+    handleQuantityChange,
+    allCardItemsHere,
   } = useContext(ShopContext);
-           
-  useEffect(() => {
-    const allCardItemsHere = async () => {
-      try {
-        const response = await getCart();
-         console.log( response , "vedddddddddd................."
-         )
-        setitems(response.data.cart_items);
-        setCart(response.data)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    allCardItemsHere();
-  }, []);
-  
-  const removeFromCartItem = async (id) => {
-    try {
-      const response = await removeCartItem(id);
-      setitems((prevItems) => prevItems.filter((item) => item.collection.id !== id));
-      console.log(response)
-    } catch (e) {
-      console.log(e)
-    }
-  };
 
-  const handleQuantityChange = async (id, newQuantity) => {
-    try {
-      const updatedData = {
-        quantity: newQuantity,
-      };
-      const response = await updateCartItemQuantity(id, updatedData);
-
-      setCart((prevCart) => ({
-        ...prevCart,
-        total: response.data.cart.total, 
-      })); 
-
-        setitems((prevItems) =>
-        prevItems.map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                quantity: newQuantity,
-                total: newQuantity * item.collection.new_price,
-              }
-            : item
-        )
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  useEffect(()=>{
+    console.log("xsartkrsgljdfsjgkfslfg");
+    allCardItemsHere()
+  },[])
 
   return (
     <div className="cartItems">
@@ -80,20 +30,18 @@ const CartItems = () => {
       </div>
       <hr />
 
-      {items.map((e) => {
-        {
-          /* if (cartiItems[e.id] > 0) { */
-        }
+      {cartItems.map((e) => {
         return (
           <div key={e.id}>
             <p>product Id: {e.collection.id}</p>
-
             <div className="cartItems-format cartItems-format-main">
-              <img
-                src={e.collection.image_url}
-                alt=""
-                className="cartItem-product-icon"
-              />
+              <Link to={`/product/${e.collection.id}`}>
+                <img
+                  src={e.collection.image_url}
+                  alt=""
+                  className="cartItem-product-icon"
+                />
+              </Link>
               <p>{e.collection.name}</p>
               <p>$ {e.collection.new_price}</p>
 
@@ -102,7 +50,6 @@ const CartItems = () => {
                 onChange={(event) =>
                   handleQuantityChange(e.id, Number(event.target.value))
                 }
-                // className="cartItem-quantity-select"
               >
                 {[...Array(10).keys()].map((num) => (
                   <option key={num + 1} value={num + 1}>
@@ -110,7 +57,6 @@ const CartItems = () => {
                   </option>
                 ))}
               </select>
-              {/* <button className="cartItem-quantity">{cartItems[e.id]}</button> */}
               <p>$ {e.total}</p>
               <img
                 className="cartItem-remove-icon"
@@ -124,9 +70,6 @@ const CartItems = () => {
             <hr />
           </div>
         );
-        {
-          /* } */
-        }
         return null;
       })}
 

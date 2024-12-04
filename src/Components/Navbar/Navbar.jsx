@@ -38,24 +38,6 @@ const Navbar = () => {
     console.log("usee effect", token);
   }, [token]);
 
-  // const handleLogout = async () => {
-  //   try {
-  //     const response = await LogOutUser();
-  //     const result = response.data;
-
-  //     if (result.status === 200) {
-  //       toast.success(result.message);
-  //       localStorage.removeItem("token"); // Clear token from local storage
-  //       setIsAuthenticated(false); // Update authentication state
-  //       navigate("/login"); // Redirect to login page
-  //     } else {
-  //       toast.error("Logout failed!");
-  //     }
-  //   } catch (error) {
-  //     toast.error("An error occurred during logout.");
-  //   }
-  // };
-console.log("dsfghjkl;jhgfdsghjklhgfdhjkl");
   return (
     <div className={Classes.navbar}>
       <ToastContainer
@@ -128,13 +110,6 @@ console.log("dsfghjkl;jhgfdsghjklhgfdhjkl");
         </li>
       </ul>
       <div className={Classes.cart}>
-        {/* {isAuthenticated ? (
-          <button onClick={handleLogout}>Logout</button>
-        ) : (
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
-        )} */}
 
         {isAuthenticated ? (
           <button onClick={() => handleLogout(navigate, setIsAuthenticated)}>

@@ -14,14 +14,10 @@ import React, { useState, useEffect } from "react";
 import CollectionsManager from "./Components/CollectionsManager";
 import FormShow from "./Components/FormShow";
 import Collection from "./Components/Collection";
-// import { handleLogout } from "./Components/Navbar/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
-  console.log("mainn render");
-  useEffect(() => {
-    console.log("mainn render");
-  })
   return (
     <div>
       <BrowserRouter>

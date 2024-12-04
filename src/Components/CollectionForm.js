@@ -8,15 +8,11 @@ const CollectionForm = ({
   handleAddCollection,
   }) => {
   const navigate = useNavigate();
-
   const fileInputRef = useRef(null);
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     handleInputChange({ target: { name: "image", value: file } });
   };
-
-
 
   return (
     <div className="form-container">
@@ -97,8 +93,8 @@ const CollectionForm = ({
           <label style={{ fontWeight: "normal" }}>
             <input
               type="checkbox"
-              name="newCollection"
-              checked={formData.newCollection}
+              name="new_collection"
+              checked={formData.new_collection}
               onChange={handleInputChange}
             />
             New Collection

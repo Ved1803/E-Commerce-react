@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { getCollectionById } from "../api/apiFunctions";
 
 const Collection = () => {
-  const { id } = useParams(); // Get the collection ID from the URL
+  const { id } = useParams(); 
   const [collection, setCollection] = useState(null);
 
-  // Fetch the collection details when the component loads
   useEffect(() => {
     const fetchCollectionDetails = async () => {
       try {
-        const response = await getCollectionById
+        const response = await getCollectionById(id)
         setCollection(response.data);
       } catch (error) {
         console.error("Error fetching collection details:", error);

@@ -18,7 +18,6 @@ const NewCollections = () => {
         console.error("Error fetching collections:", err);
       }
     };
-
     fetchCollections();
   }, []);
 
@@ -27,19 +26,20 @@ const NewCollections = () => {
       <h1>NEW COLLECTIONS</h1>
       <hr />
       <div className="collections">
-        {collections?.map((item, i) => {
-          {/* console.log(item) */}
-          return (
-            <Item
-              key={i}
-              id={item.id}
-              name={item.name}
-              image={item.image_url}
-              new_price={item.new_price}
-              old_price={item.old_price}
-            />
-          );
-        })}
+        {collections
+          ?.filter((item) => item.new_collection === true)
+          .map((item, i) => {
+            return (
+              <Item
+                key={i}
+                id={item.id}
+                name={item.name}
+                image={item.image_url}
+                new_price={item.new_price}
+                old_price={item.old_price}
+              />
+            );
+          })}
       </div>
     </div>
   );
