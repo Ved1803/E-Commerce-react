@@ -15,7 +15,6 @@ const FormShow = () => {
     // Handle adding a new collection
     const handleAddCollection = async () => {
       try {
-        console.log(formData, "formdata----------");
         const formDataToSend = new FormData();
         Object.keys(formData).forEach((key) => {
           console.log(typeof key, 'key value');

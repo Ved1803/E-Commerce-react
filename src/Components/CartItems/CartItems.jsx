@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/cart_cross_icon.png";
@@ -92,7 +93,9 @@ const CartItems = () => {
               <h3>${cart.total}</h3>
             </div>
           </div>
-          <button>PROCEED TO CHECKOUT</button>
+          <Link to={`/checkout`}>
+            <button>PROCEED TO CHECKOUT</button>
+          </Link>
         </div>
         <div className="cartItems-promocode">
           <p>If you have a promo code, Enter it here</p>

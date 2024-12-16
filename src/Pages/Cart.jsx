@@ -1,12 +1,16 @@
 import React from 'react'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import CartItems from '../Components/CartItems/CartItems'
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
-    console.log("cart");
     return (
-        <div>
+      <div>
+        <Elements stripe={stripePromise}>
             <CartItems />
-        </div>
+        </Elements>
+      </div>
     )
 }
 

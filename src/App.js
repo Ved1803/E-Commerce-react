@@ -16,6 +16,7 @@ import FormShow from "./Components/FormShow";
 import Collection from "./Components/Collection";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CheckOut from "./Pages/CheckOut";
 
 const App = () => {
   return (
@@ -46,11 +47,10 @@ const App = () => {
           <Route path="/collections" element={<CollectionsManager />} />
           <Route path="/collections/:id" element={<Collection />} />
           <Route path="/collections/:id" element={<CollectionsManager />} />
+          <Route path="/checkout" element={<CheckOut />} />
         </Routes>
         <Footer />
       </BrowserRouter>
-
-      {/* <CollectionsManager /> */}
     </div>
   );
 };

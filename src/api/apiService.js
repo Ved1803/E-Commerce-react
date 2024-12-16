@@ -24,21 +24,22 @@ api.interceptors.request.use(
 // src/api/apiEndpoints.js
 const apiEndpoints = {
   // Collections APIs
-  getAllCollections: '/collections',
+  getAllCollections: "/collections",
   getCollectionById: (id) => `/collections/${id}`,
-  createCollection: '/collections',
+  createCollection: "/collections",
   updateCollection: (id) => `/collections/${id}`,
   deleteCollection: (id) => `/collections/${id}`,
   // Users APIs
-  SignUpUser: '/signup',
-  LoginUser: '/login',
-  LogOutUser: '/logout',
+  SignUpUser: "/signup",
+  LoginUser: "/login",
+  LogOutUser: "/logout",
   // Cart
-  getCart: '/cart',
+  getCart: "/cart",
   // CartItems
-  createCartItems: '/cart/cart_items',
+  createCartItems: "/cart/cart_items",
   removeCartItem: (id) => `/cart/cart_items/${id}`,
-  updateCartItemQuantity: (id) => `/cart/cart_items/${id}`
+  updateCartItemQuantity: (id) => `/cart/cart_items/${id}`,
+  payments: "payments/create_payment_intent",
 };
 
 export { api, apiEndpoints };
