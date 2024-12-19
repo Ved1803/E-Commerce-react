@@ -6,15 +6,15 @@
 }
 
 .logInSignUp-container {
-    width: 580px;
-    height: 600px;
+    width: 700px;
+    height: 650px;
     background: white;
     margin: auto;
     padding: 40px 60px;
 }
 
 .logInSignUp-container h1 {
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 .logInSignUp-fields {

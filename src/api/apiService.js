@@ -23,23 +23,22 @@ api.interceptors.request.use(
 
 // src/api/apiEndpoints.js
 const apiEndpoints = {
-  // Collections APIs
   getAllCollections: "/collections",
   getCollectionById: (id) => `/collections/${id}`,
   createCollection: "/collections",
   updateCollection: (id) => `/collections/${id}`,
   deleteCollection: (id) => `/collections/${id}`,
-  // Users APIs
   SignUpUser: "/signup",
   LoginUser: "/login",
   LogOutUser: "/logout",
-  // Cart
   getCart: "/cart",
-  // CartItems
   createCartItems: "/cart/cart_items",
   removeCartItem: (id) => `/cart/cart_items/${id}`,
   updateCartItemQuantity: (id) => `/cart/cart_items/${id}`,
   payments: "payments/create_payment_intent",
+  createOrder: "/orders",
+  getOrderById: (id) => `/orders/${id}`,
+  getOrderItems: "/order_items"
 };
 
 export { api, apiEndpoints };

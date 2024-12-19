@@ -17,6 +17,14 @@ import Collection from "./Components/Collection";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckOut from "./Pages/CheckOut";
+import OrderCompleted from "./Pages/OrderCompleted";
+import Orders from "./Components/Users/Orders";
+import AccountSettings from "./Components/Users/AccountSettings";
+import Wishlist from "./Components/Users/Wishlist";
+import Coupons from "./Components/Users/Coupons";
+import GiftCards from "./Components/Users/GiftCards";
+import HelpCenter from "./Components/Users/HelpCenter";
+import AccountLayout from "./Pages/AccountLayout";
 
 const App = () => {
   return (
@@ -48,6 +56,17 @@ const App = () => {
           <Route path="/collections/:id" element={<Collection />} />
           <Route path="/collections/:id" element={<CollectionsManager />} />
           <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/OrderCompleted" element={<OrderCompleted />} />
+
+          <Route path="/account" element={<AccountLayout />}>
+            <Route index element={<Orders />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="settings" element={<AccountSettings />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="coupons" element={<Coupons />} />
+            <Route path="giftcards" element={<GiftCards />} />
+            <Route path="help" element={<HelpCenter />} />
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

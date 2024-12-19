@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Classes from "./navbar.module.css";
 import cart_icon from "../Assets/cart_image.png";
-import logo from "../Assets/logo.jpeg"
+import logo from "../Assets/logo.jpeg";
+import user_icon from "../Assets/user_icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
 import { LogOutUser } from "../../api/apiFunctions";
@@ -29,9 +30,9 @@ export const handleLogout = async (navigate, setIsAuthenticated) => {
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { getTotalCartItems} = useContext(ShopContext);
+  const { getTotalCartItems } = useContext(ShopContext);
   const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     setIsAuthenticated(!!token);
@@ -110,7 +111,6 @@ const Navbar = () => {
         </li>
       </ul>
       <div className={Classes.cart}>
-
         {isAuthenticated ? (
           <button onClick={() => handleLogout(navigate, setIsAuthenticated)}>
             Logout
@@ -123,17 +123,15 @@ const Navbar = () => {
         <Link to="/cart">
           <img src={cart_icon} alt="cart" />
         </Link>
-        <div className={Classes.nav_cart_count}>
-          {getTotalCartItems()}
-        </div>
+
+        <div className={Classes.nav_cart_count}>{getTotalCartItems()}</div>
+
+        <Link to="/account">
+          <img src={user_icon} alt="account" className={Classes["user-icon"]} />
+        </Link>
       </div>
     </div>
   );
 };
 
 export default Navbar;
-
-
-
-
-

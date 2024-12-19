@@ -1,22 +1,32 @@
 import React, { useState, useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { payments } from "../../api/apiFunctions";
+import { createOrder, payments } from "../../api/apiFunctions";
 import { ShopContext } from "../../Context/ShopContext";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./CartItems.css";
-
 
 const CartPayment = () => {
   const { cart } = useContext(ShopContext);
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCreateOrder = async () => {
+    try {
+      const response = await createOrder();
+      console.log(response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   const handleCheckout = async () => {
     setLoading(true);
     try {
       const data = {
         cart_total: cart.total,
       };
-      console.log(data, "..............data...")
       const response = await payments(data);
       const { client_secret: clientSecret, error } = response.data;
       if (error) {
@@ -37,6 +47,8 @@ const CartPayment = () => {
         alert(`Payment failed: ${stripeError.message}`);
       } else if (paymentIntent.status === "succeeded") {
         alert("Payment successful!");
+        await handleCreateOrder();
+        navigate("/OrderCompleted");
       }
     } catch (err) {
       console.error("Error:", err);

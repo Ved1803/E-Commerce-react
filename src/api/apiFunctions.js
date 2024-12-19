@@ -17,3 +17,6 @@ export const createCartItems = (data) => api.post(apiEndpoints.createCartItems, 
 export const removeCartItem = (id) => api.delete(apiEndpoints.removeCartItem(id));
 export const updateCartItemQuantity = (id, data) => api.patch(apiEndpoints.updateCartItemQuantity(id), data);
 export const payments = (data) => api.post(apiEndpoints.payments, data);
+export const createOrder = () => api.post(apiEndpoints.createOrder);
+export const getOrderById = (id) => api.get(apiEndpoints.getOrderById(id));
+export const getOrderItems = () => api.get(apiEndpoints.getOrderItems);
